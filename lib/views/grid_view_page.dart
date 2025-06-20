@@ -6,8 +6,7 @@ import 'package:new_app/views/fruits_detail_page.dart';
 import 'package:new_app/widgets/search_bar_widget.dart';
 
 class GridViewPage extends StatefulWidget {
-  final Function(CartItemModel cartItem) addCartItem;
-  const GridViewPage({super.key, required this.addCartItem});
+  const GridViewPage({super.key});
 
   @override
   State<GridViewPage> createState() => _GridViewPageState();
@@ -100,7 +99,7 @@ class _GridViewPageState extends State<GridViewPage> {
                       MaterialPageRoute(
                         builder: (context) => FruitsDetailPage(
                           fruit: fruit,
-                          addCartItem: widget.addCartItem,
+                         
                         ),
                       ),
                     );

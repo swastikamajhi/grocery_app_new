@@ -5,11 +5,9 @@ import 'package:new_app/models/fruit_model.dart';
 
 class FruitsDetailPage extends StatefulWidget {
   final FruitModel fruit;
-  final Function(CartItemModel cartItem) addCartItem;
   const FruitsDetailPage({
     super.key,
     required this.fruit,
-    required this.addCartItem,
   });
 
   @override
@@ -217,7 +215,6 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                                       .toString(),
                             );  
 
-                            widget.addCartItem(cartItem);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
