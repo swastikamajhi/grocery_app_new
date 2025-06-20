@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:new_app/models/cart_item_model.dart';
 import 'package:new_app/models/fruit_model.dart';
 
 class FruitsDetailPage extends StatefulWidget {
   final FruitModel fruit;
-  const FruitsDetailPage({super.key, required this.fruit});
+  final Function(CartItemModel cartItem) addCartItem;
+  const FruitsDetailPage({
+    super.key,
+    required this.fruit,
+    required this.addCartItem,
+  });
 
   @override
   State<FruitsDetailPage> createState() => _FruitsDetailPageState();
@@ -65,137 +71,177 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(
-              fit: BoxFit.cover,
+            Expanded(
+              child: Image.asset(
+                fit: BoxFit.cover,
 
-              widget.fruit.imageUrl,
-              height: 400,
-              width: MediaQuery.of(context).size.width,
+                widget.fruit.imageUrl,
+                height: 400,
+                width: MediaQuery.of(context).size.width,
+              ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
 
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Rs. ${widget.fruit.price}",
-                        style: TextStyle(
-                          fontSize: 27,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.green,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: toggleFavourite,
-                        icon: Icon(
-                          isFavourite ? Icons.favorite : Icons.favorite_outline,
-                          size: 25,
-                          color: Colors.red,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  Text(
-                    widget.fruit.name,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
-                  ),
-
-                  Row(
-                    spacing: 5,
-                    children: [
-                      RatingBar.builder(
-                        itemSize: 25,
-                        initialRating: 2,
-                        minRating: 1,
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemPadding: EdgeInsets.symmetric(horizontal: 0),
-                        itemBuilder: (context, _) =>
-                            Icon(Icons.star, color: Colors.amber),
-                        onRatingUpdate: (rating) {},
-                      ),
-
-                      Text(
-                        '(89 Reviews)',
-                        style: TextStyle(color: Colors.grey, fontSize: 18),
-                      ),
-                    ],
-                  ),
-                  Text(
-                    'Fruits are a delicious and healthy part of our daily diet. They come in many varieties, such as apples, bananas, oranges, grapes, and mangoes, each with its own unique flavor and nutrients. Most fruits are rich in vitamins, especially vitamin C and fiber, which help keep our bodies strong and our digestion smooth.',
-                    style: TextStyle(color: Colors.grey, fontSize: 15),
-                  ),
-
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 5,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text('Quantity', style: TextStyle(fontSize: 20)),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        onPressed: removeFruit,
-                        icon: Icon(Icons.remove),
-                      ),
-
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          fruitQuantity.toString(),
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                      IconButton(onPressed: addFruit, icon: Icon(Icons.add)),
-                    ],
-                  ),
-                  SizedBox(height: 10),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(MediaQuery.of(context).size.width, 40),
-                      backgroundColor: Colors.green[500],
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.circular(10),
-                      ),
-                    ),
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Add to Cart',
+                          "Rs. ${widget.fruit.price}",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 27,
                             fontWeight: FontWeight.bold,
+                            color: Colors.green,
                           ),
                         ),
-                        Icon(
-                          Icons.inventory_2_outlined,
-                          color: Colors.white,
-                          size: 25,
+                        IconButton(
+                          onPressed: toggleFavourite,
+                          icon: Icon(
+                            isFavourite
+                                ? Icons.favorite
+                                : Icons.favorite_outline,
+                            size: 25,
+                            color: Colors.red,
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+
+                    Text(
+                      widget.fruit.name,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+
+                    Row(
+                      spacing: 5,
+                      children: [
+                        RatingBar.builder(
+                          itemSize: 25,
+                          initialRating: 2,
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemPadding: EdgeInsets.symmetric(horizontal: 0),
+                          itemBuilder: (context, _) =>
+                              Icon(Icons.star, color: Colors.amber),
+                          onRatingUpdate: (rating) {},
+                        ),
+
+                        Text(
+                          '(89 Reviews)',
+                          style: TextStyle(color: Colors.grey, fontSize: 18),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'Fruits are a delicious and healthy part of our daily diet. They come in many varieties, such as apples, bananas, oranges, grapes, and mangoes, each with its own unique flavor and nutrients. Most fruits are rich in vitamins, especially vitamin C and fiber, which help keep our bodies strong and our digestion smooth.',
+                      style: TextStyle(color: Colors.grey, fontSize: 15),
+                    ),
+
+                    // SizedBox(height: 20),
+                    Spacer(),
+                    Column(
+                      spacing: 5,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20,
+                                vertical: 5,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                'Quantity',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            Spacer(),
+                            IconButton(
+                              onPressed: removeFruit,
+                              icon: Icon(Icons.remove),
+                            ),
+
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(
+                                fruitQuantity.toString(),
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: addFruit,
+                              icon: Icon(Icons.add),
+                            ),
+                          ],
+                        ),
+
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(
+                              MediaQuery.of(context).size.width,
+                              40,
+                            ),
+                            backgroundColor: Colors.green[500],
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusGeometry.circular(10),
+                            ),
+                          ),
+                          onPressed: () {
+                            final cartItem = CartItemModel(
+                              itemName: widget.fruit.name,
+                              itemPrice: widget.fruit.price,
+                              itemQuantity: fruitQuantity.toString(),
+                              itemImageUrl: widget.fruit.imageUrl,
+                              totalPrice:
+                                  (int.parse(widget.fruit.price) *
+                                          fruitQuantity)
+                                      .toString(),
+                            );  
+
+                            widget.addCartItem(cartItem);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Add to Cart',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Icon(
+                                Icons.inventory_2_outlined,
+                                color: Colors.white,
+                                size: 25,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

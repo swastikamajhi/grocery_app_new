@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/fruits_contants.dart';
+import 'package:new_app/models/cart_item_model.dart';
 import 'package:new_app/models/fruit_model.dart';
 import 'package:new_app/views/fruits_detail_page.dart';
 import 'package:new_app/widgets/search_bar_widget.dart';
 
 class GridViewPage extends StatefulWidget {
-  const GridViewPage({super.key});
+  final Function(CartItemModel cartItem) addCartItem;
+  const GridViewPage({super.key, required this.addCartItem});
 
   @override
   State<GridViewPage> createState() => _GridViewPageState();
@@ -96,7 +98,10 @@ class _GridViewPageState extends State<GridViewPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FruitsDetailPage(fruit: fruit),
+                        builder: (context) => FruitsDetailPage(
+                          fruit: fruit,
+                          addCartItem: widget.addCartItem,
+                        ),
                       ),
                     );
                   },
