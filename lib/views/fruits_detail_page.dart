@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:new_app/models/cart_item_model.dart';
 import 'package:new_app/models/fruit_model.dart';
+import 'package:new_app/providers/cart_provider.dart';
+import 'package:provider/provider.dart';
 
 class FruitsDetailPage extends StatefulWidget {
   final FruitModel fruit;
-  const FruitsDetailPage({
-    super.key,
-    required this.fruit,
-  });
+  const FruitsDetailPage({super.key, required this.fruit});
 
   @override
   State<FruitsDetailPage> createState() => _FruitsDetailPageState();
@@ -213,8 +212,9 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                                   (int.parse(widget.fruit.price) *
                                           fruitQuantity)
                                       .toString(),
-                            );  
+                            );
 
+                            context.read<CartProvider>().addCartItems(cartItem);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
