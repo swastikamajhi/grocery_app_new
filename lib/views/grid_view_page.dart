@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/fruits_contants.dart';
-import 'package:new_app/models/cart_item_model.dart';
 import 'package:new_app/models/fruit_model.dart';
 import 'package:new_app/views/fruits_detail_page.dart';
 import 'package:new_app/widgets/search_bar_widget.dart';

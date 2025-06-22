@@ -73,7 +73,6 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                 fit: BoxFit.cover,
 
                 widget.fruit.imageUrl,
-                height: 400,
                 width: MediaQuery.of(context).size.width,
               ),
             ),
@@ -93,12 +92,17 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                         Text(
                           "Rs. ${widget.fruit.price}",
                           style: TextStyle(
-                            fontSize: 27,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
                             color: Colors.green,
                           ),
                         ),
                         IconButton(
+                          padding: EdgeInsets.all(0),
+                          visualDensity: VisualDensity.compact,
+                          style: ButtonStyle(
+                            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          ),
                           onPressed: toggleFavourite,
                           icon: Icon(
                             isFavourite
@@ -114,7 +118,7 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                     Text(
                       widget.fruit.name,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -123,7 +127,7 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                       spacing: 5,
                       children: [
                         RatingBar.builder(
-                          itemSize: 25,
+                          itemSize: 22,
                           initialRating: 2,
                           minRating: 1,
                           direction: Axis.horizontal,
@@ -141,21 +145,23 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                         ),
                       ],
                     ),
+                    SizedBox(height: 5),
                     Text(
                       'Fruits are a delicious and healthy part of our daily diet. They come in many varieties, such as apples, bananas, oranges, grapes, and mangoes, each with its own unique flavor and nutrients. Most fruits are rich in vitamins, especially vitamin C and fiber, which help keep our bodies strong and our digestion smooth.',
-                      style: TextStyle(color: Colors.grey, fontSize: 15),
+                      style: TextStyle(color: Colors.grey, fontSize: 14),
                     ),
 
                     // SizedBox(height: 20),
                     Spacer(),
                     Column(
-                      spacing: 5,
+                      mainAxisSize: MainAxisSize.min,
+                      spacing: 7,
                       children: [
                         Row(
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(
-                                horizontal: 20,
+                                horizontal: 15,
                                 vertical: 5,
                               ),
                               decoration: BoxDecoration(
@@ -164,17 +170,25 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                               ),
                               child: Text(
                                 'Quantity',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ),
                             Spacer(),
                             IconButton(
+                              padding: EdgeInsets.all(0),
+                              visualDensity: VisualDensity.compact,
+                              style: ButtonStyle(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
                               onPressed: removeFruit,
                               icon: Icon(Icons.remove),
                             ),
 
                             Container(
-                              padding: EdgeInsets.all(10),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 15,
+                                vertical: 5,
+                              ),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
@@ -185,6 +199,11 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                               ),
                             ),
                             IconButton(
+                              padding: EdgeInsets.all(0),
+                              visualDensity: VisualDensity.compact,
+                              style: ButtonStyle(
+                                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                              ),
                               onPressed: addFruit,
                               icon: Icon(Icons.add),
                             ),
@@ -223,14 +242,14 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
                                 'Add to Cart',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Icon(
                                 Icons.inventory_2_outlined,
                                 color: Colors.white,
-                                size: 25,
+                                size: 22,
                               ),
                             ],
                           ),
