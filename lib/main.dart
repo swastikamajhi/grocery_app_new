@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/main_nav_page.dart';
 import 'package:new_app/providers/cart_provider.dart';
+import 'package:new_app/providers/favourites_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => CartProvider(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+        ChangeNotifierProvider(create: (context) => FavouritesProvider()),
+      ],
+      child: MyApp(),
     ),
   );
 }

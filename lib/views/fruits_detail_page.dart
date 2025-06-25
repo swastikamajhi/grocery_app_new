@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:new_app/models/cart_item_model.dart';
 import 'package:new_app/models/fruit_model.dart';
 import 'package:new_app/providers/cart_provider.dart';
+import 'package:new_app/providers/favourites_provider.dart';
 import 'package:provider/provider.dart';
 
 class FruitsDetailPage extends StatefulWidget {
@@ -21,6 +22,8 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
     setState(() {
       isFavourite = !isFavourite;
       if (isFavourite) {
+        context.read<FavouritesProvider>().addFavouriteItems(widget.fruit.name);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Item added to favourites'),
@@ -30,6 +33,10 @@ class _FruitsDetailPageState extends State<FruitsDetailPage> {
           ),
         );
       } else {
+        context.read<FavouritesProvider>().removeFavouriteItem(
+          widget.fruit.name,
+        );
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Item removed from favourites'),

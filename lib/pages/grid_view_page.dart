@@ -66,6 +66,8 @@ class _GridViewPageState extends State<GridViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
+
       appBar: AppBar(title: Text('Grid View Page'), centerTitle: true),
       body: Column(
         children: [
@@ -96,10 +98,7 @@ class _GridViewPageState extends State<GridViewPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FruitsDetailPage(
-                          fruit: fruit,
-                         
-                        ),
+                        builder: (context) => FruitsDetailPage(fruit: fruit),
                       ),
                     );
                   },

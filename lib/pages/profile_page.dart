@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Home Page'), centerTitle: true),
+      backgroundColor: Colors.transparent,
 
+      appBar: AppBar(title: Text('Profile Page'), centerTitle: true),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(20),
