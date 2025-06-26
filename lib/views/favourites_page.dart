@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/providers/favourites_provider.dart';
+import 'package:new_app/widgets/delete_all_dialogue.dart';
 import 'package:provider/provider.dart';
 
 class FavouritesPage extends StatelessWidget {
@@ -12,13 +13,30 @@ class FavouritesPage extends StatelessWidget {
         title: Text('Favourites Page'),
         centerTitle: true,
         automaticallyImplyLeading: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return DeleteAllDialogue();
+                },
+              );
+            },
+            icon: Icon(
+              Icons.delete_sweep_outlined,
+              color: Colors.red,
+              size: 30,
+            ),
+          ),
+        ],
       ),
       body: context.read<FavouritesProvider>().favouriteItems.isEmpty
           ? Center(child: Text('No favourite items added yet.'))
           : ListView.builder(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               itemCount: context
-                  .read<FavouritesProvider>()
+                  .watch<FavouritesProvider>()
                   .favouriteItems
                   .length,
               itemBuilder: (context, index) {

@@ -16,7 +16,7 @@ class FavouritesProvider with ChangeNotifier {
   }
 
   void clearAllFavouriteItems() {
-    _favouriteItems = [];
+    _favouriteItems.clear();
     notifyListeners();
   }
 }
