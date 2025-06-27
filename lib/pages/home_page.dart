@@ -74,6 +74,81 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget fruitsHorizontalListView() {
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+
+        itemCount: FruitsContants.fruitList.length,
+        itemBuilder: (context, index) {
+          final fruit = FruitsContants.fruitList[index];
+
+          return Container(
+            height: 120,
+            width: 120,
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.only(right: 25),
+            decoration: BoxDecoration(
+              color: Color(0xffd6f7fc),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.asset(fruit.imageUrl, height: 80, width: 80),
+                Text(
+                  fruit.name,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Text(
+                  "Rs. ${fruit.price}",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _fruitsListHeader(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          'Fresh Fruits',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Spacer(),
+        TextButton(
+          onPressed: () {
+            context.read<NavigationProvider>().changeCurrentIndex(1);
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'See All',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.orange[700],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: Colors.orange[700],
+                size: 25,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,82 +162,9 @@ class HomePage extends StatelessWidget {
           children: [
             _fruitsBanner(),
             SizedBox(height: 10),
-            Row(
-              children: [
-                Text(
-                  'Fresh Fruits',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                Spacer(),
-                TextButton(
-                  onPressed: () {
-                    context.read<NavigationProvider>().changeCurrentIndex(1);
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        'See All',
-                        style: TextStyle(
-                          fontSize: 18,
-                          color: Colors.orange[700],
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Icon(
-                        Icons.keyboard_arrow_right_outlined,
-                        color: Colors.orange[700],
-                        size: 25,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+            _fruitsListHeader(context),
             SizedBox(height: 10),
-            SizedBox(
-              height: 150,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-
-                itemCount: FruitsContants.fruitList.length,
-                itemBuilder: (context, index) {
-                  final fruit = FruitsContants.fruitList[index];
-
-                  return Container(
-                    height: 120,
-                    width: 120,
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.only(right: 25),
-                    decoration: BoxDecoration(
-                      color: Color(0xffd6f7fc),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Image.asset(fruit.imageUrl, height: 80, width: 80),
-                        Text(
-                          fruit.name,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          "Rs. ${fruit.price}",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
+            fruitsHorizontalListView(),
           ],
         ),
       ),
