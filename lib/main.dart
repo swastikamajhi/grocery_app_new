@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:new_app/main_nav_page.dart';
 import 'package:new_app/providers/cart_provider.dart';
 import 'package:new_app/providers/favourites_provider.dart';
+import 'package:new_app/providers/navigation_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -10,6 +11,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => CartProvider()),
         ChangeNotifierProvider(create: (context) => FavouritesProvider()),
+        ChangeNotifierProvider(create: (context) => NavigationProvider()),
       ],
       child: MyApp(),
     ),

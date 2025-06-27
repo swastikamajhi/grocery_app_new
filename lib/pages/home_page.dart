@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/fruits_contants.dart';
+import 'package:new_app/providers/navigation_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -93,7 +95,9 @@ class HomePage extends StatelessWidget {
                 ),
                 Spacer(),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.read<NavigationProvider>().changeCurrentIndex(1);
+                  },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
