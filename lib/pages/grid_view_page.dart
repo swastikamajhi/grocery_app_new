@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/fruits_contants.dart';
+import 'package:new_app/constants/vegetable_constants.dart';
 import 'package:new_app/models/fruit_model.dart';
+import 'package:new_app/models/vegetable_model.dart';
 import 'package:new_app/views/fruits_detail_page.dart';
+import 'package:new_app/views/vegetables_details_page.dart';
 import 'package:new_app/widgets/search_bar_widget.dart';
 
 class GridViewPage extends StatefulWidget {
@@ -27,86 +30,188 @@ class _GridViewPageState extends State<GridViewPage> {
     }
   }
 
-  List<FruitModel> filteredFruitList = [];
+  void searchVegetable(String searchQuery) {
+    if (searchQuery == '') {
+      setState(() {
+        filteredVegetableList = VegetableConstants.vegetableList;
+      });
+    } else {
+      setState(() {
+        filteredVegetableList = VegetableConstants.vegetableList.where((e) {
+          return e.name.toLowerCase().contains(searchQuery.toLowerCase()) ||
+              e.price.contains(searchQuery.toLowerCase());
+        }).toList();
+      });
+    }
+  }
 
- 
+  List<FruitModel> filteredFruitList = [];
+  List<VegetableModel> filteredVegetableList = [];
 
   @override
   void initState() {
     filteredFruitList = FruitsContants.fruitList;
+    filteredVegetableList = VegetableConstants.vegetableList;
     super.initState();
+  }
+
+  Widget fruitsTab() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SearchBarWidget(
+            onSearch: (String searchQuery) {
+              searchFruit(searchQuery);
+            },
+          ),
+        ),
+        Expanded(
+          child: GridView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 30,
+              crossAxisSpacing: 20,
+              crossAxisCount: 3,
+              childAspectRatio: 8 / 9,
+            ),
+            padding: EdgeInsets.all(20),
+            itemCount: filteredFruitList.length,
+
+            itemBuilder: (context, index) {
+              final fruit = filteredFruitList[index];
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FruitsDetailPage(fruit: fruit),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[300],
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(fruit.imageUrl, height: 50, width: 50),
+                      FittedBox(
+                        child: Text(
+                          fruit.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Rs. ${fruit.price}",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget vegetablesTab() {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: SearchBarWidget(
+            onSearch: (String searchQuery) {
+              searchVegetable(searchQuery);
+            },
+          ),
+        ),
+        Expanded(
+          child: GridView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 30,
+              crossAxisSpacing: 20,
+              crossAxisCount: 3,
+              childAspectRatio: 8 / 9,
+            ),
+            padding: EdgeInsets.all(20),
+            itemCount: filteredVegetableList.length,
+
+            itemBuilder: (context, index) {
+              final vegetable = filteredVegetableList[index];
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          VegetablesDetailsPage(vegetable: vegetable),
+                    ),
+                  );
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[300],
+                  ),
+                  padding: EdgeInsets.all(8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(vegetable.imageUrl, height: 50, width: 50),
+                      FittedBox(
+                        child: Text(
+                          vegetable.name,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        "Rs. ${vegetable.price}",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 2,
 
-      appBar: AppBar(title: Text('Grid View Page'), centerTitle: true),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: SearchBarWidget(
-              onSearch: (String searchQuery) {
-                searchFruit(searchQuery);
-              },
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              physics: AlwaysScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 30,
-                crossAxisSpacing: 20,
-                crossAxisCount: 3,
-                childAspectRatio: 8 / 9,
-              ),
-              padding: EdgeInsets.all(20),
-              itemCount: filteredFruitList.length,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
 
-              itemBuilder: (context, index) {
-                final fruit = filteredFruitList[index];
-                return InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FruitsDetailPage(fruit: fruit),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.grey[300],
-                    ),
-                    padding: EdgeInsets.all(8),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(fruit.imageUrl, height: 50, width: 50),
-                        FittedBox(
-                          child: Text(
-                            fruit.name,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                        Text(
-                          "Rs. ${fruit.price}",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
+        appBar: AppBar(
+          title: Text('Grid View Page'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.local_grocery_store_outlined)),
+              Tab(icon: Icon(Icons.eco_outlined)),
+            ],
           ),
-        ],
+          centerTitle: true,
+        ),
+        body: TabBarView(children: [fruitsTab(), vegetablesTab()]),
       ),
     );
   }

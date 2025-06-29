@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SearchBarWidget extends StatefulWidget {
+
   const SearchBarWidget({super.key, required this.onSearch});
 
   final Function(String searchQuery) onSearch; //this is a callback function
