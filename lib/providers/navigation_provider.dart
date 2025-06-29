@@ -14,4 +14,14 @@ class NavigationProvider with ChangeNotifier {
     _currentIndex = 0;
     notifyListeners();
   }
+
+  //This tab index is only for the tabs in the groceries
+  int _currentGroceryTabIndex = 0;
+
+  int get currentGroceryTabIndex => _currentGroceryTabIndex;
+
+  void changeCurrentGroceryTabIndex(int index) {
+    _currentGroceryTabIndex = index;
+    notifyListeners();
+  }
 }

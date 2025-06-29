@@ -166,6 +166,7 @@ class HomePage extends StatelessWidget {
         TextButton(
           onPressed: () {
             context.read<NavigationProvider>().changeCurrentIndex(1);
+            context.read<NavigationProvider>().changeCurrentGroceryTabIndex(0);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -201,6 +202,7 @@ class HomePage extends StatelessWidget {
         TextButton(
           onPressed: () {
             context.read<NavigationProvider>().changeCurrentIndex(1);
+            context.read<NavigationProvider>().changeCurrentGroceryTabIndex(1);
           },
           child: Row(
             mainAxisSize: MainAxisSize.min,

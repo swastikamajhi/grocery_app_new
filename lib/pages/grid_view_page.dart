@@ -3,9 +3,11 @@ import 'package:new_app/constants/fruits_contants.dart';
 import 'package:new_app/constants/vegetable_constants.dart';
 import 'package:new_app/models/fruit_model.dart';
 import 'package:new_app/models/vegetable_model.dart';
+import 'package:new_app/providers/navigation_provider.dart';
 import 'package:new_app/views/fruits_detail_page.dart';
 import 'package:new_app/views/vegetables_details_page.dart';
 import 'package:new_app/widgets/search_bar_widget.dart';
+import 'package:provider/provider.dart';
 
 class GridViewPage extends StatefulWidget {
   const GridViewPage({super.key});
@@ -195,7 +197,7 @@ class _GridViewPageState extends State<GridViewPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: 0,
+      initialIndex: context.watch<NavigationProvider>().currentGroceryTabIndex,
       length: 2,
 
       child: Scaffold(
