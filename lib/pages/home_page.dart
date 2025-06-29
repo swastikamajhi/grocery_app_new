@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/constants/fruits_contants.dart';
+import 'package:new_app/constants/vegetable_constants.dart';
 import 'package:new_app/providers/navigation_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -114,11 +115,86 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget vegetablesHorizontalListView() {
+    return SizedBox(
+      height: 150,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+
+        itemCount: VegetableConstants.vegetableList.length,
+        itemBuilder: (context, index) {
+          final vegetable = VegetableConstants.vegetableList[index];
+
+          return Container(
+            height: 120,
+            width: 120,
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.only(right: 25),
+            decoration: BoxDecoration(
+              color: Color(0xfff9e6fe),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Image.asset(vegetable.imageUrl, height: 80, width: 80),
+                Text(
+                  vegetable.name,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                Text(
+                  "Rs. ${vegetable.price}",
+                  style: TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   Widget _fruitsListHeader(BuildContext context) {
     return Row(
       children: [
         Text(
           'Fresh Fruits',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        Spacer(),
+        TextButton(
+          onPressed: () {
+            context.read<NavigationProvider>().changeCurrentIndex(1);
+          },
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'See All',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.orange[700],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Icon(
+                Icons.keyboard_arrow_right_outlined,
+                color: Colors.orange[700],
+                size: 25,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _vegetableListHeader(BuildContext context) {
+    return Row(
+      children: [
+        Text(
+          'Fresh Vegetables',
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         Spacer(),
@@ -165,6 +241,12 @@ class HomePage extends StatelessWidget {
             _fruitsListHeader(context),
             SizedBox(height: 10),
             fruitsHorizontalListView(),
+
+            ///
+            SizedBox(height: 10),
+            _vegetableListHeader(context),
+            SizedBox(height: 10),
+            vegetablesHorizontalListView(),
           ],
         ),
       ),
