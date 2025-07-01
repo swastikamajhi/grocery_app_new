@@ -20,12 +20,10 @@ class _SplashPageState extends State<SplashPage> {
 
     if (isUserLoggedIn) {
       Future.delayed(Duration(seconds: 2)).then((value) {
-        if (!context.mounted) return;
         Navigator.pushNamed(context, '/mainNav');
       });
     } else {
       Future.delayed(Duration(seconds: 2)).then((value) {
-        if (!context.mounted) return;
         Navigator.pushNamed(context, '/login');
       });
     }

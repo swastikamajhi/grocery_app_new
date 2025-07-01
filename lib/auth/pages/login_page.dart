@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/auth/services/local_storage_service.dart';
 import 'package:new_app/providers/form_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,14 +18,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final formProvider = context.read<FormProvider>();
 
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Center(
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -71,17 +72,23 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState?.validate() ?? false) {
+                    if (formKey.currentState?.validate() ?? false) {
+                      if (emailController.text == 'Rahul@gmail.com' &&
+                          passwordController.text == 'Rahul1234') {
+                        LocalStorageService.setUserLoggedIn();
+                        Navigator.pushNamed(context, '/mainNav');
+                      }
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Form Validation Successful !!!'),
+                          content: Text('Login Successful !!!'),
                           backgroundColor: Colors.green,
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Form Validation Successful !!!'),
+                          content: Text('Email and Password Invalid !!!'),
                           backgroundColor: Colors.red,
                         ),
                       );

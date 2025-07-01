@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const SplashPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => RegisterPage(),
-        '/mainNav' : (context) => MainNavPage()
+        '/mainNav': (context) => MainNavPage(),
       },
     );
   }

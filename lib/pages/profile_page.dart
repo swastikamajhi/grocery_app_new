@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/auth/services/local_storage_service.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -8,7 +9,44 @@ class ProfilePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.transparent,
 
-      appBar: AppBar(title: Text('Profile Page'), centerTitle: true),
+      appBar: AppBar(
+        title: Text('Profile Page'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Text('Do you want to logout?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Cancel'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          LocalStorageService.setUserLogout();
+                          Navigator.pushNamed(context, '/login');
+                        },
+                        child: Text(
+                          'Logout',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+            icon: Icon(Icons.logout_outlined),
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(20),
