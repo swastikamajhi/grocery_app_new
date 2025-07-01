@@ -1,7 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/auth/services/local_storage_service.dart';
 
-class SplashPage extends StatelessWidget {
+class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    checkAuthStatusAndNavigate();
+    super.initState();
+  }
+
+  void checkAuthStatusAndNavigate() async {
+    final isUserLoggedIn = await LocalStorageService.getUserLoggedIn();
+
+    if (isUserLoggedIn) {
+      Future.delayed(Duration(seconds: 2)).then((value) {
+        if (!context.mounted) return;
+        Navigator.pushNamed(context, '/mainNav');
+      });
+    } else {
+      Future.delayed(Duration(seconds: 2)).then((value) {
+        if (!context.mounted) return;
+        Navigator.pushNamed(context, '/login');
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

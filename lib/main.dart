@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/auth/pages/login_page.dart';
 import 'package:new_app/auth/pages/register_page.dart';
+import 'package:new_app/main_nav_page.dart';
 import 'package:new_app/providers/cart_provider.dart';
 import 'package:new_app/providers/favourites_provider.dart';
 import 'package:new_app/providers/form_provider.dart';
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => const SplashPage(),
         '/login': (context) => const LoginPage(),
         '/register': (context) => RegisterPage(),
+        '/mainNav' : (context) => MainNavPage()
       },
     );
   }
