@@ -9,7 +9,7 @@ class LocalStorageService {
 
   static Future<void> saveUserData(UserModel model) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_userDataKey, jsonEncode(model.toJson(model)));
+    await prefs.setString(_userDataKey, jsonEncode(model.toJson()));
   }
 
   static Future<UserModel?> getUserData() async {

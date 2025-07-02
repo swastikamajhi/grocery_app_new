@@ -26,13 +26,13 @@ class UserModel {
     );
   }
 
-  Map<String, dynamic> toJson(UserModel model) {
+  Map<String, dynamic> toJson() {
     return {
-      'userId': model.userId,
-      'username': model.username,
-      'email': model.email,
-      'phoneNo': model.phoneNo,
-      'password': model.password,
+      'userId': userId,
+      'username': username,
+      'email': email,
+      'phoneNo': phoneNo,
+      'password': password,
     };
   }
 }
