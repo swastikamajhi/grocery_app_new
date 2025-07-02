@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:new_app/auth/services/local_storage_service.dart';
+import 'package:new_app/models/user_model.dart';
 import 'package:new_app/providers/form_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -19,14 +22,14 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     final formProvider = context.read<FormProvider>();
 
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         child: Center(
           child: Form(
-            key: _formKey,
+            key: formKey,
             child: Column(
               spacing: 20,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -93,17 +96,29 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   onPressed: () {
-                    if (_formKey.currentState?.validate() ?? false) {
+                    if (formKey.currentState?.validate() ?? false) {
+                      final userId = Uuid().v1();
+
+                      final userModel = UserModel(
+                        userId: userId,
+                        username: userNameController.text.trim(),
+                        email: emailController.text.trim(),
+                        phoneNo: phoneNoController.text.trim(),
+                        password: passwordController.text.trim(),
+                      );
+
+                      LocalStorageService.saveUserData(userModel);
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Form Validation Successful !!!'),
+                          content: Text('User Registration Successful !!!'),
                           backgroundColor: Colors.green,
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
-                          content: Text('Form Validation Successful !!!'),
+                          content: Text('User Registration Failed !!!'),
                           backgroundColor: Colors.red,
                         ),
                       );
