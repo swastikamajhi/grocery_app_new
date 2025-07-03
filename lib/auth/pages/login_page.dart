@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:new_app/auth/services/local_storage_service.dart';
 import 'package:new_app/providers/form_provider.dart';
@@ -13,6 +15,24 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  late final String userEmail;
+  late final String userPassword;
+
+  @override
+  void initState() {
+    getUserData();
+    super.initState();
+  }
+
+  Future<void> getUserData() async {
+    final userModel = await LocalStorageService.getUserData();
+    userEmail = userModel?.email ?? 'null';
+    userPassword = userModel?.password ?? '';
+
+    log('userEmail $userEmail');
+    log('userPassword $userPassword');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +92,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   onPressed: () {
-                    if (formKey.currentState?.validate() ?? false) {
-                      if (emailController.text == 'Rahul@gmail.com' &&
-                          passwordController.text == 'Rahul1234') {
-                        LocalStorageService.setUserLoggedIn();
-                        Navigator.pushNamed(context, '/mainNav');
-                      }
+                    if ((formKey.currentState?.validate() ?? false) &&
+                        emailController.text == userEmail &&
+                        passwordController.text == userPassword) {
+                      LocalStorageService.setUserLoggedIn();
+                      Navigator.pushNamed(context, '/mainNav');
 
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
