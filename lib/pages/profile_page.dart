@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:new_app/auth/services/local_storage_service.dart';
+import 'package:new_app/models/user_model.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  UserModel? user;
+
+  @override
+  void initState() {
+   
+    super.initState();
+  }
+
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,7 +89,7 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Name: John Snow',
+                        'Name: ${user?.username ?? 'No Name'}',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -88,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Address: Biratnagar',
+                        'Email: ${user?.email ?? 'No Email'}',
                         style: TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
@@ -129,7 +144,7 @@ class ProfilePage extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
-                      Text('rahul@gmail.com', style: TextStyle(fontSize: 18)),
+                      Text('swastika@gmail.com', style: TextStyle(fontSize: 18)),
                     ],
                   ),
                 ],
